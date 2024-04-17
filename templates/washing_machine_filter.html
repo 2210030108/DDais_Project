@@ -1,10 +1,236 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Washing Machine Filter</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: black;
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+        }
+
+        .star {
+            position: fixed;
+            width: 2px;
+            height: 2px;
+            background-color: #fff; /* Star color */
+            animation: twinkling linear infinite;
+            opacity: 0.8; /* Adjust opacity for better visibility */
+        }
+
+        .shooting-star {
+            position: fixed;
+            width: 5px;
+            height: 5px;
+            background-color: #fff; /* Shooting star color */
+            animation: shooting-star linear infinite;
+            opacity: 0.8; /* Adjust opacity for better visibility */
+        }
+
+        @keyframes twinkling {
+            0%, 100% {
+                opacity: 0.8; /* Adjust opacity for better visibility */
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes shooting-star {
+            0% {
+                opacity: 0.8; /* Adjust opacity for better visibility */
+                transform: translate(0, 0);
+            }
+            10% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0.8; /* Adjust opacity for better visibility */
+                transform: translate(-200%, 200%); /* Adjust the ending position of the shooting star */
+            }
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        .card {
+            margin-bottom: 20px;
+        }
+
+        .washing-machine-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.1); /* Add background color with transparency */
+        }
+
+        .washing-machine-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Adjust styles for form elements */
+        input[type="text"],
+        select {
+            color: #ffffff; /* Set text color to white */
+            background-color: rgba(255, 255, 255, 0.1); /* Add background color with transparency */
+            border: 1px solid #ced4da;
+        }
+
+        /* Adjust styles for form labels */
+        label {
+            color: #ffffff; /* Set label color to white */
+        }
+
+        /* Adjust styles for dropdown menu */
+        .dropdown-menu {
+            background-color: rgba(0, 0, 0, 0.8); /* Set dropdown background color */
+        }
+
+        /* Set product name input text color to white */
+        #product_name {
+            color: #ffffff;
+        }
+
+        /* Remove transition effect for product name input */
+        #product_name:hover,
+        #product_name:focus {
+            transition: none;
+        }
+    </style>
 </head>
 <body>
-$END$
+    <div class="container">
+        <h1 class="text-center">Filter Washing Machines</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="product_name">Product Name</label>
+                        <input type="text" name="product_name" id="product_name" class="form-control" placeholder="Enter product name">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="id_price_range">Price Range</label>
+                        <select name="price_range" id="id_price_range" class="form-control">
+                            {% for value, label in form.price_range.field.choices %}
+                                <option value="{{ value }}">{{ label }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="ratings">Rating</label>
+                        <select name="ratings" id="ratings" class="form-control">
+                            <option value="">Any Rating</option>
+                            <option value="1">1 star</option>
+                            <option value="2">2 stars</option>
+                            <option value="3">3 stars</option>
+                            <option value="4">4 stars</option>
+                            <option value="5">5 stars</option>
+                            <!-- Add more options as needed -->
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Filter</button>
+        </form>
+
+        <!-- Filtered Washing Machines Section -->
+        <div id="filteredResults" class="mt-4">
+            <h2>Filtered Washing Machines</h2>
+            <ul class="list-group">
+                {% for washing_machine in washing_machines %}
+                    <li class="list-group-item washing-machine-item">
+                        <strong>{{ washing_machine.product_name }}</strong><br>
+                        <span>Price: {{ washing_machine.price }}</span><br>
+                        <span>Ratings: {{ washing_machine.ratings }}</span><br>
+                        <span>Brand: {{ washing_machine.brand_name }}</span><br>
+                        <span>Model: {{ washing_machine.model_name }}</span><br>
+                        <span>Washing Capacity: {{ washing_machine.washing_capacity }}</span><br>
+                        <span>Color: {{ washing_machine.color }}</span><br>
+                        <span>Max Spin Speed: {{ washing_machine.maximum_spin_speed }}</span><br>
+                        <span>Function Type: {{ washing_machine.function_type }}</span><br>
+                        <span>Inbuilt Heater: {{ washing_machine.inbuilt_heater }}</span><br>
+                        <span>Washing Method: {{ washing_machine.washing_method }}</span><br>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- JavaScript for the starry background -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const numStars = 100; // Number of stars
+            const numShootingStars = 3; // Number of shooting stars
+
+            for (let i = 0; i < numStars; i++) {
+                createStar();
+            }
+
+            for (let i = 0; i < numShootingStars; i++) {
+                createShootingStar();
+            }
+
+            function createStar() {
+                const star = document.createElement("div");
+                star.className = "star";
+
+                const x = Math.random() * window.innerWidth;
+                const y = Math.random() * window.innerHeight;
+
+                star.style.left = `${x}px`;
+                star.style.top = `${y}px`;
+
+                document.body.appendChild(star);
+
+                const animationDuration = Math.random() * 2 + 1; // Random duration for twinkling
+                star.style.animationDuration = `${animationDuration}s`;
+
+                setTimeout(() => {
+                    document.body.removeChild(star);
+                    createStar(); // Replace the star after its animation ends
+                }, animationDuration * 1000);
+            }
+
+            function createShootingStar() {
+                const shootingStar = document.createElement("div");
+                shootingStar.className = "star shooting-star";
+
+                const x = Math.random() * window.innerWidth;
+                const y = Math.random() * window.innerHeight;
+
+                shootingStar.style.left = `${x}px`;
+                shootingStar.style.top = `${y}px`;
+
+                document.body.appendChild(shootingStar);
+
+                const animationDuration = Math.random() * 2 + 1; // Random duration for twinkling
+                shootingStar.style.animationDuration = `${animationDuration}s`;
+
+                setTimeout(() => {
+                    document.body.removeChild(shootingStar);
+                    createShootingStar(); // Replace the shooting star after its animation ends
+                }, animationDuration * 1000);
+            }
+        });
+    </script>
 </body>
 </html>

@@ -1,10 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Washing Machine Recommendations</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Additional custom styles can be added here */
+.custom-container {
+            max-width: 1400px; /* Set your desired max-width here */
+        }
+.washing-machine-item {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.washing-machine-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+    </style>
 </head>
 <body>
-$END$
+    <div class="container mt-5">
+        <h1 class="mb-4">Washing Machine Recommendations</h1>
+        <div class="table-responsive">
+            <table class="table table-bordered table-sm">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Price</th>
+                        <th>Ratings</th>
+                        <th>Brand Name</th>
+                        <th>Model Name</th>
+                        <th>Washing Capacity</th>
+                        <th>Color</th>
+                        <th>Maximum Spin Speed</th>
+                        <th>Function Type</th>
+                        <th>Inbuilt Heater</th>
+                        <th>Washing Method</th>
+                        <th>Product URL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for washing_machine in washing_machines %}
+                    <tr>
+                        <td>{{ washing_machine.product_name }}</td>
+                        <td>{{ washing_machine.price }}</td>
+                        <td>{{ washing_machine.ratings }}</td>
+                        <td>{{ washing_machine.brand_name }}</td>
+                        <td>{{ washing_machine.model_name }}</td>
+                        <td>{{ washing_machine.washing_capacity }}</td>
+                        <td>{{ washing_machine.color }}</td>
+                        <td>{{ washing_machine.maximum_spin_speed }}</td>
+                        <td>{{ washing_machine.function_type }}</td>
+                        <td>{{ washing_machine.inbuilt_heater }}</td>
+                        <td>{{ washing_machine.washing_method }}</td>
+                        <td><a href="{{ washing_machine.product_url }}" target="_blank" class="btn btn-primary btn-sm">Product Link</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- Bootstrap JS (Optional) -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
