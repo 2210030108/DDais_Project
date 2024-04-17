@@ -30,9 +30,6 @@ The washing machine dataset used in this project contains comprehensive informat
 
 We welcome contributions from the community! If you have any suggestions, bug fixes, or new features to propose, feel free to submit a pull request.
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgements
 
